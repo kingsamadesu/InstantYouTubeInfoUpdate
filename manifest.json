@@ -1,0 +1,18 @@
+{
+    "manifest_version": 2,
+    "name": "Real Time YouTube Video Update",
+    "version": "1.0",
+    "content_scripts": [
+        {
+          "matches": [
+            "https://www.youtube.com/watch?v=*"
+          ],
+          "js": ["main.js"]
+        }
+      ],
+    "browser_action": {
+        "default_icon": "img.png",
+        "default_popup": "./popup/popup.html",
+        "default_title": "Real Time YouTube Video Update"
+   }
+  }
