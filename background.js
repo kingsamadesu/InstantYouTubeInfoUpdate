@@ -1,56 +1,3 @@
-var Background = /** @class */ (function () {
-  function Background() {
-      var _this = this;
-      this.tabIds = new Map();
-      this.sendMessage = function (tabId) {
-          chrome.storage.local.get('real_time_youtube_disabled', function (values) {
-            var disabled = values.real_time_youtube_disabled;
-            chrome.tabs.sendMessage(tabId, {action: "open_dialog_box"});
-            console.log("message was send ")
-          });
-        
-      };
-
-      this.enableExtension = function () {
-        chrome.browserAction.setIcon({
-          path: {
-            "24": "res/img/img24.png",
-            "32": "res/img/img32.png",
-            "48": "res/img/img48.png"
-        },
-      });
-      chrome.tabs.onUpdated.addListener(_this.sendMessage);
-
-        console.log("ON");
-      };
-      this.disableExtension = function () {
-        chrome.browserAction.setIcon({
-          path: {
-            "24": "res/img/img_dis24.png",
-            "32": "res/img/img_dis32.png",
-            "48": "res/img/img_dis48.png"
-        },
-      });
-      chrome.tabs.onUpdated.removeListener(_this.sendMessage);
-      console.log("OFF");
-      _this.tabIds.clear();
-      };
-      this.saveSettings = function (disabled) {
-          chrome.storage.local.set({ real_time_youtube_disabled: disabled }); // eslint-disable-line
-      };
-      this.tabIds = new Map();
-      chrome.storage.local.get('real_time_youtube_disabled', function (values) {
-          var disabled = values.real_time_youtube_disabled;
-          if (typeof disabled === 'undefined') {
-              disabled = false;
-              _this.saveSettings(disabled);
-            }
-      });
-
-  }
-  return Background;
-}());
-
 var disabled = false;
 
 main();
@@ -98,7 +45,7 @@ function disableExtension() {
   chrome.tabs.query({
     active: true,
     currentWindow: true,
-    url: '*://*.youtube.com/*',
+    url: '*://*.youtube.com/watch?v=*',
   }, function (tabs) {
   if (tabs.length > 0) {
     chrome.tabs.sendMessage(tabs[0].id, {action: "ON"});
