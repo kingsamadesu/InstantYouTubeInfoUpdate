@@ -1,17 +1,15 @@
 var disabled = false;
 
-main();
-function main(){
-  chrome.browserAction.onClicked.addListener(function () {
-        if (disabled) {
-            enableExtension();
-        }
-        else {
-            disableExtension();
-        }
-        disabled = !disabled;
-    });
-}
+chrome.browserAction.onClicked.addListener(function () {
+  if (disabled) {
+      enableExtension();
+  }
+  else {
+      disableExtension();
+  }
+  disabled = !disabled;
+});
+
 
 function enableExtension() {
   chrome.browserAction.setIcon({

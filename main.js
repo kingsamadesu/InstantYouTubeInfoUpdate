@@ -16,12 +16,6 @@ var dislikesObj;
 var viewsObj;
 
 
-
-window.addEventListener('load', (event) => {
-    console.log("1 " + document.querySelector(viewsSelector));
-});
-
-
 document.addEventListener("visibilitychange", event => {
     if (document.visibilityState == "visible") {
       isPaused = false;
@@ -30,13 +24,13 @@ document.addEventListener("visibilitychange", event => {
     }
 })
 
-main()
+
+
 chrome.runtime.onMessage.addListener((request) => {
-    //const url = request.url;
     isON = false;
-    console.log(request);
 });
 
+main()
 
 function main(){
     var link = document.createElement('link');
@@ -44,10 +38,6 @@ function main(){
     link.setAttribute('type', 'text/css');
     link.setAttribute('href', 'https://fonts.googleapis.com/css2?family=Exo:ital@1&display=swap');
     document.head.appendChild(link);
-    /*    likesObj.setAttribute("style", "font-family: 'Exo', sans-serif;font-size:21px;");
-    dislikesObj.setAttribute("style", "font-family: 'Exo', sans-serif;font-size:21px;");
-    viewsObj.setAttribute("style", "font-family: 'Exo', sans-serif;font-size:18px;");
- */
     Start();
 }
 
@@ -142,10 +132,9 @@ async function initElements(){
     likesObj.setAttribute("style", "font-family: 'Exo', sans-serif;");
     dislikesObj.setAttribute("style", "font-family: 'Exo', sans-serif;");
     viewsObj.setAttribute("style", "font-family: 'Exo', sans-serif;");
-
-    viewsObj.textContent = data.viewCount.toLocaleString() ;
-    likesObj.textContent = data.likeCount.toLocaleString() ;
-    dislikesObj.textContent = data.dislikeCount.toLocaleString() ;
+    viewsObj.textContent = parseInt(data.viewCount).toLocaleString() ;
+    likesObj.textContent = parseInt(data.likeCount).toLocaleString() ;
+    dislikesObj.textContent = parseInt(data.dislikeCount).toLocaleString() ;
 }
 
 async function updateAll(){
